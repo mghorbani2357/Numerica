@@ -1,5 +1,5 @@
-#ifndef NUMERICALIB_SIEVE_H
-#define NUMERICALIB_SIEVE_H
+#ifndef SIEVE_H
+#define SIEVE_H
 
 typedef struct {
     uint64_t *segments;
@@ -29,4 +29,4 @@ void printSieveRange(SieveRange range);
 
 void freeSieveRange(SieveRange *range);
 
-#endif //NUMERICALIB_SIEVE_H
+#endif //SIEVE_H

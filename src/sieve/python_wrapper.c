@@ -2,14 +2,13 @@
 #include "sieve.h"
 #include "sieve_exceptions.h"
 
-ExceptionMode exceptionMode = EXCEPTION_MODE_PYTHON;
-
-static void handlePythonException(const char* message, const char* errorType) {
-    PyObject* exType = PyExc_RuntimeError;
-    if (strcmp(errorType, "ValueError") == 0) exType = PyExc_ValueError;
+void pythonExceptionHandler(const char* message, const char* errorType) {
+//    PyObject* exType = PyExc_RuntimeError;
+//    if (strcmp(errorType, "ValueError") == 0) exType = PyExc_ValueError;
     // Add more mappings if needed
 
-    PyErr_Format(exType, "%s: %s", errorType, message);
+//    PyErr_Format(exType, "%s: %s", errorType, message);
+    return;
 }
 
 typedef struct {
@@ -35,7 +34,7 @@ static PyObject *PySieveRange_repr(PySieveRange *self) {
 // Python type definition
 static PyTypeObject PySieveRangeType = {
         PyVarObject_HEAD_INIT(NULL, 0)
-        .tp_name = "numericalib.PySieveRange",
+        .tp_name = "sieve.PySieveRange",
         .tp_basicsize = sizeof(PySieveRange),
         .tp_dealloc = (destructor)PySieveRange_dealloc,
         .tp_flags = Py_TPFLAGS_DEFAULT,
@@ -66,23 +65,22 @@ static PyObject *load(PyObject *self, PyObject *args) {
 }
 
 // Method definitions
-static PyMethodDef numericalibMethods[] = {
+static PyMethodDef sieveMethods[] = {
         {"load", load, METH_VARARGS, "load primes"},
         {NULL, NULL, 0, NULL}  // Sentinel
 };
 
 // Module definition
-static struct PyModuleDef numericalib = {
+static struct PyModuleDef sieve = {
         PyModuleDef_HEAD_INIT,
-        "numericalib",           // Module name
+        "sieve",           // Module name
         NULL,                 // Optional docstring
         -1,                   // Size of per-interpreter state of the module
-        numericalibMethods
+        sieveMethods
 };
 
 // Init function
-PyMODINIT_FUNC PyInit_numericalib(void) {
+PyMODINIT_FUNC PyInit_sieve(void) {
 
-    pythonExceptionHandler = handlePythonException;
-    return PyModule_Create(&numericalib);
+    return PyModule_Create(&sieve);
 }

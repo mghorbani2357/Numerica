@@ -7,15 +7,11 @@
 
 #include "sieve.h"
 #include "sieve_exceptions.h"
-
 #define SET_BIT(arr, i) (arr[(i) / 64] |= (1ULL << ((i) % 64)))
 #define CLEAR_BIT(arr, i) (arr[(i) / 64] &= ~(1ULL << (63 -(i % 64))))
 #define GET_BIT(arr, i) (arr[(i) / 64] & (1ULL << ((i) % 64)))
 #define BIAS 1
 //jmp_buf jumpBuffer;
-//
-ExceptionMode exceptionMode = EXCEPTION_MODE_C;
-//
 //
 //void raiseException(const char *exceptionMessage, const char *errorType) {
 //    if (exceptionMode == EXCEPTION_MODE_PYTHON) {
@@ -77,7 +73,7 @@ SieveRange initializeSieveRange(const uint64_t start, const uint64_t end) {
 
     UInt64Array array = initializeUInt64Array(segmentCount);
 
-    for (int i = 0; i < array.size; i++)
+    for (uint64_t i = 0; i < array.size; i++)
         array.segments[i] = -1;
 
     SieveRange range;
